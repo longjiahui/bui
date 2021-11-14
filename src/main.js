@@ -1,6 +1,7 @@
 import Button from './components/button.vue'
 import Check from './components/check.vue'
 import Input from './components/input.vue'
+import Select from './components/select.vue'
 
 import './styles/main.scss'
 
@@ -8,6 +9,7 @@ const components = {
     Button,
     Check,
     Input,
+    Select,
 }
 
 export default {

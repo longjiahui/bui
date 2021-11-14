@@ -2,6 +2,7 @@
 import { ref } from "@vue/reactivity";
 
 let check = ref(false)
+let input = ref('hello world')
 </script>
 
 <template>
@@ -12,18 +13,30 @@ let check = ref(false)
 </div>
 
 <h2>checkbox</h2>
-<bui-check v-model:value="check">
-  hello</bui-check>
+<div class="h">
+  <bui-check v-model:value="check">
+    hello</bui-check>
+</div>
 
 <h2>input</h2>
 <div class="h h-s">
   <bui-input placeholder="hello"></bui-input>
-  <bui-input>
+  <bui-input v-model:value="input">
     <template #prepend>tel:</template>
     <template #append>5662</template>
   </bui-input>
   <bui-input disabled></bui-input>
 </div>
+
+<h3>Select</h3>
+<div class="h">
+  <bui-select
+    v-model:value="input"
+    :options="[{
+      value: 'hello',
+    }, {value: 'world'}]"></bui-select>
+</div>
+
 </template>
 
 <style lang="scss">
@@ -33,9 +46,22 @@ let check = ref(false)
   padding: 4px 8px;
   border-radius: 3px;
   border: 1px solid lightgray;
+  cursor: pointer;
+  transition: all .3s;
+
+  &:hover{
+    box-shadow: rgba(0, 0, 0, .1) 0 0 24px;
+  }
 }
 .bui-check{
   color: #666;
+  cursor: pointer;
+
+  &:hover{
+    .indicator{
+      box-shadow: rgba(0, 0, 0, .5) 0 0 8px;
+    }
+  }
 
   &.is-checked{
     color: #333;
@@ -76,6 +102,23 @@ let check = ref(false)
 
   & input:focus ~ .outline{
     box-shadow: rgba(0, 0, 0, .1) 0 0 24px;
+  }
+}
+
+.bui-select{
+  background: whitesmoke;
+  border-radius: 3px;
+  border: 1px solid lightgray;
+  padding: 4px 8px;
+
+  .select-options{
+    opacity: 0;
+    transition: all .3s;
+    transform: translate(0, 10px);
+  }
+  &:hover .select-options{
+    opacity: 1;
+    transform: none;
   }
 }
 </style>
