@@ -10,6 +10,7 @@
             <slot name="append"></slot>
         </div>
     </div>
+    <bui-popup></bui-popup>
 </template>
 
 <script setup>

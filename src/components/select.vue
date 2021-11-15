@@ -1,6 +1,9 @@
 <template>
-    <div class="bui-select">
-        <div class="select-value">
+    <div ref="select"
+        @mouseenter="isHover = true"
+        @mouseleave="isHover = false"
+        :class="['bui-select', isHover?'is-hover':'', isShow?'is-show':'']">
+        <div class="select-value" @click="isShow = !isShow">
             <template v-if="!$slots.default">
                 {{value}}
             </template>
@@ -16,9 +19,15 @@
             </div>
         </div>
     </div>
+    <teleport to="body">
+        <div class="bui-mask"></div>
+    </teleport>
 </template>
 
 <script setup>
+import { ref, onUnmounted, watch } from 'vue'
+import timeoutUtils from '@scripts/timeout'
+
 let props = defineProps({
     value: String,
     valueGetter: {
@@ -34,12 +43,31 @@ let props = defineProps({
         default: ()=>([])
     }
 })
+let isHover = ref(false)
+let isShow = ref(false)
+let select = ref(null)
+let timeout = timeoutUtils.createTimeout()
+
+const handleClickDocument = e=>{
+    let target = e.target
+    let item = target
+    while((item = item.parentNode) != null){
+        if(item === select.value){
+            // 找到了不隐藏了
+            return
+        }
+    }
+    isShow.value = false
+}
+document.addEventListener('click', handleClickDocument, { capture: true })
+onUnmounted(()=>document.removeEventListener('click', handleClickDocument))
+
 </script>
 
 <style lang="scss" scoped>
 .bui-select{
     position: relative;
-    &:hover{
+    &.is-show{
         .select-options{
             visibility: visible;
             pointer-events: auto;

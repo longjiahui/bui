@@ -116,7 +116,7 @@ let input = ref('hello world')
     transition: all .3s;
     transform: translate(0, 10px);
   }
-  &:hover .select-options{
+  &.is-show .select-options{
     opacity: 1;
     transform: none;
   }
